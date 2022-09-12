@@ -28,6 +28,7 @@ class Usuario {
     this.books.push(newBook);
   }
 
+  // Función que retorna un array con los nombres de los libros.
   getBookNames() {
     const bookNames = this.books.map((book) => book.libro);
     return bookNames;
