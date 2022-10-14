@@ -33,24 +33,36 @@ productsRouter.get("/:id", async (req, res) => {
 
 productsRouter.post("/", async (req, res) => {
   const newProduct = req.body;
-  const productos = await contenedorProductos.save(newProduct);
-  res.json({
-    message: "¡El producto fue creado correctamente!",
-    response: productos,
-  });
+  const product = await contenedorProductos.save(newProduct);
+  if (product) {
+    res.json({
+      message: "¡El producto fue creado correctamente!",
+      response: product,
+    });
+  } else {
+    res.json({
+      message: "El producto no pudo ser creado, valide campos :(",
+    });
+  }
 });
 
 productsRouter.put("/:id", async (req, res) => {
-  const { id } = req.params;
+  const id = req.params.id;
   const newInfo = req.body;
   const productosActualizados = await contenedorProductos.updateById(
-    parseInt(id),
+    id,
     newInfo
   );
-  res.json({
-    message: `El producto correspondiente al id ${id} fue actualizado correctamente :)`,
-    response: productosActualizados,
-  });
+  if (productosActualizados) {
+    res.json({
+      message: `El producto correspondiente al id ${id} fue actualizado correctamente :)`,
+      response: productosActualizados,
+    });
+  } else {
+    res.json({
+      message: "El producto no existe :(",
+    });
+  }
 });
 
 productsRouter.delete("/:id", async (req, res) => {

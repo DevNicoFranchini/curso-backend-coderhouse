@@ -1,3 +1,4 @@
+const e = require("express");
 const fs = require("fs");
 
 class Contenedor {
@@ -11,6 +12,7 @@ class Contenedor {
       // Veo si el archivo existe.
       if (fs.existsSync(this.nameFile)) {
         const contenido = await fs.promises.readFile(this.nameFile, "utf-8");
+
         // Verifico si hay contenido
         if (contenido) {
           const productos = JSON.parse(contenido);
@@ -18,22 +20,33 @@ class Contenedor {
             (acc, item) => (item.id > acc ? (acc = item.id) : acc),
             0
           );
-          const newProduct = {
-            id: lastIdAdded + 1,
-            ...product,
-          };
-          productos.push(newProduct);
-          // Sobreescribo el archivo
-          await fs.promises.writeFile(
-            this.nameFile,
-            JSON.stringify(productos, null, 2)
-          );
+          if (product.title && product.price && product.thumbnail) {
+            const newProduct = {
+              title: product.title,
+              price: product.price,
+              thumbnail: product.thumbnail,
+              id: lastIdAdded + 1,
+            };
+            productos.push(newProduct);
+            // Sobreescribo el archivo
+            await fs.promises.writeFile(
+              this.nameFile,
+              JSON.stringify(productos, null, 2)
+            );
+
+            return newProduct;
+          } else {
+            throw new Error("Complete campos");
+          }
         }
+
         //Si no hay contenido
         else {
           const newProduct = {
             id: 1,
-            ...product,
+            title: product.title,
+            price: product.title,
+            thumbnail: product.thumbnail,
           };
           await fs.promises.writeFile(
             this.nameFile,
@@ -41,11 +54,14 @@ class Contenedor {
           );
         }
       }
+
       // Si no existe el archivo
       else {
         const newProduct = {
           id: 1,
-          ...product,
+          title: product.title,
+          price: product.title,
+          thumbnail: product.thumbnail,
         };
         await fs.promises.writeFile(
           // Escribo nuevo archivo
@@ -116,17 +132,27 @@ class Contenedor {
   // Función que actualiza por id
   updateById = async (id, body) => {
     try {
-      const productos = await this.getAll();
-      const productPos = productos.findIndex((elm) => elm.id === id);
-      productos[productPos] = {
-        id: id,
-        ...body,
-      };
+      const product = await this.getById(parseInt(id));
+      const products = await this.getAll();
+
+      let newProduct = {};
+
+      newProduct.title = !body.title ? product.title : body.title;
+      newProduct.price = !body.price ? product.price : body.price;
+      newProduct.thumbnail = !body.thumbnail
+        ? product.thumbnail
+        : body.thumbnail;
+      newProduct.id = product.id;
+
+      const index = products.findIndex((item) => item.id === parseInt(id));
+      products[index] = newProduct;
+
       await fs.promises.writeFile(
         this.nameFile,
-        JSON.stringify(productos, null, 2)
+        JSON.stringify(products, null, 2)
       );
-      return productos;
+
+      return newProduct;
     } catch (err) {
       console.log(err);
     }
