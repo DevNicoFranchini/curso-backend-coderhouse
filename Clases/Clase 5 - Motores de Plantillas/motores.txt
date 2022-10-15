@@ -1,0 +1,20 @@
+// MVC --> Patrón Modelo Vista Controlador
+// Trata de separar los datos de su presentacion --> Separa el código/programador del código/diseñador
+
+/* Motores de plantillas:   - Lee un archivo de texto
+                            - La sintaxis depende del motor
+                            - Suelen tener un pequeño lenguaje de script
+*/
+
+Ventajas de la utilizacion
+- El codigo es más organizado
+- Podemos separar el trabajo en equipos
+- Podemos reutilizar secciones de codigo
+- Mejor interacción a la parte visual de nuestras aplicaciones
+- Permite separar, optimizar y organizar el codigo
+
+Desventajas de no utilizar
+- Afecta la velocidad del desarrollo
+- Cometer errores en el HTML
+- Dificil de documentar
+- 
