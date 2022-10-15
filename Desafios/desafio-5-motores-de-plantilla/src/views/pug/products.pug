@@ -1,0 +1,11 @@
+div
+    h1 LISTA DE PRODUCTOS
+
+    if (products)
+        include partials/table.pug
+    else 
+        p Producto Inexistente
+
+    
+    div(class="text-center")
+        a(href="/" class="btn btn-danger mt-1") Volver al Inicio

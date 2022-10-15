@@ -1,0 +1,9 @@
+<h1>LISTA DE PRODUCTOS</h1>
+
+{{#if product }}
+    {{> showProduct}}
+{{else}}
+     <div class="alert alert-danger" role="alert">
+        El producto no existe
+    </div>
+{{/if}}

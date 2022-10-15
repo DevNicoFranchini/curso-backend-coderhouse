@@ -1,0 +1,13 @@
+html  
+    head
+        include ./partials/head.pug
+    body
+        div
+            h1 LISTA DE PRODUCTOS
+
+            if (product) 
+                include ./partials/product.pug
+            else 
+                div(class="alert alert-danger" role="alert") Producto Inexistente
+                    div(class="text-center")
+                        a(href="/" class="btn btn-danger mt-1") Volver al Inicio  
