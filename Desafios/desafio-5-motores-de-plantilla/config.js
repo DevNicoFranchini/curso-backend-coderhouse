@@ -1,7 +1,7 @@
 const config = {
   hbs: false,
-  pug: true,
-  ejs: false,
+  pug: false,
+  ejs: true,
 };
 
 module.exports = config;

@@ -6,12 +6,9 @@
     <div>
       <h1>LISTA DE PRODUCTOS</h1>
 
-      <% if (product) { %> <p>hola</p><% } else { %>
+      <% if (product) { %> <%- include('./partials/product.ejs')%><% } else { %>
       <div class="alert alert-danger" role="alert">
         Producto Inexistente <% } %>
-        <div class="text-center">
-          <a href="/" class="btn btn-danger mt-1">Volver al Inicio</a>
-        </div>
       </div>
     </div>
   </body>
