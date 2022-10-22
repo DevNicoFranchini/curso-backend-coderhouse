@@ -1,0 +1,26 @@
+[
+  {
+    "autor": "nico@gmail.com",
+    "texto": "Hola!",
+    "fyh": "22/10/2022 11:06:24",
+    "id": 1
+  },
+  {
+    "autor": "pepe@gmail.com.ar",
+    "texto": "Holaaaaa",
+    "fyh": "22/10/2022 11:19:18",
+    "id": 2
+  },
+  {
+    "autor": "pepe@gmail.com.ar",
+    "texto": "FUNCIONA",
+    "fyh": "22/10/2022 11:22:06",
+    "id": 3
+  },
+  {
+    "autor": "juancito@hotmail.com",
+    "texto": "SIIII",
+    "fyh": "22/10/2022 11:22:16",
+    "id": 4
+  }
+]
