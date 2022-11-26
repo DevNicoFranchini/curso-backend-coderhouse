@@ -1,0 +1,62 @@
+[
+  {
+    title: "Manzana",
+    price: 15,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxvixmX03_kinA0INf9nKRKFXQSoxDg6Io_g&usqp=CAU",
+  },
+  {
+    title: "Pera",
+    price: 60,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7xJ0anXTvRXDtECJAYKsgdzEp3qbVaegHVg&usqp=CAU",
+  },
+  {
+    title: "Banana",
+    price: 120,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPZzXYK7F3lD3badggwlGQ19NWlkD4q06B1Q&usqp=CAU",
+  },
+  {
+    title: "Kiwi",
+    price: 250,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyXSODT80ROGg9uJsScxFSg3PrDNlSG07khA&usqp=CAU",
+  },
+  {
+    title: "Sandia",
+    price: 600,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzdEsHQ6n1WB82MIRfleEs0yeaVLTYnrmvsw&usqp=CAU",
+  },
+  {
+    title: "Melon",
+    price: 600,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgBoKtfHpDFJGh3dAjFZJM00PaGWO9jXVjWw&usqp=CAU",
+  },
+  {
+    title: "Uva",
+    price: 10,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4EDXs3YA9Pa2MOron4gybheVlLop2CBnXTA&usqp=CAU",
+  },
+  {
+    title: "Mango",
+    price: 30,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsNr1A9Vov21hm15DsOCIHQvYv4Z-4J1dHUQ&usqp=CAU",
+  },
+  {
+    title: "Durazno",
+    price: 90,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZA9gVoAE1GDSqoIFbYvPO2z0H1sxC3lddDQ&usqp=CAU",
+  },
+  {
+    title: "Frutilla",
+    price: 400,
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlUf3DnBPcxCQz2CrSrcL-0molul0SHd74lQ&usqp=CAU",
+  },
+]

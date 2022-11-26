@@ -1,0 +1,52 @@
+[
+  {
+    autor: "nico@gmail.com",
+    texto: "Hola!",
+    fyh: "12/11/2022 10:06:24",
+  },
+  {
+    autor: "pepe@gmail.com.ar",
+    texto: "Holaaaaa",
+    fyh: "12/11/2022 10:19:18",
+  },
+  {
+    autor: "pepe@gmail.com.ar",
+    texto: "FUNCIONA",
+    fyh: "12/11/2022 10:22:06",
+  },
+  {
+    autor: "juancito@hotmail.com",
+    texto: "SIIII",
+    fyh: "12/11/2022 10:22:16",
+  },
+  {
+    autor: "ricky@yahoo.com",
+    texto: "Apareci",
+    fyh: "12/11/2022 10:22:26",
+  },
+  {
+    autor: "shey@gmail.com",
+    texto: "Hola chicos!",
+    fyh: "12/11/2022 10:22:30",
+  },
+  {
+    autor: "nico@gmail.com",
+    texto: "Estamos armando una db por segunda vez!",
+    fyh: "12/11/2022 10:23:16",
+  },
+  {
+    autor: "pepe@gmail.com.ar",
+    texto: "SIIII",
+    fyh: "12/11/2022 10:23:34",
+  },
+  {
+    autor: "juancito@hotmail.com",
+    texto: "Vamooos",
+    fyh: "12/11/2022 10:23:50",
+  },
+  {
+    autor: "shey@gmail.com",
+    texto: "Siii!",
+    fyh: "12/11/2022 10:24:16",
+  },
+];
