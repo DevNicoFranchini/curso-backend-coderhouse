@@ -2,8 +2,11 @@ const express = require("express");
 const options = require("./config/dbConfig.js");
 
 const { Server } = require("socket.io");
+const { normalize, schema } = require("normalizr");
 
 const MysqlContainer = require("./containers/MysqlContainer.js");
+const MessagesContainer = require("./containers/MessagesContainer.js");
+const ProductsContainer = require("./containers/ProductsContainer.js");
 
 // Inicializar el servidor
 // Esto es para no limitar el puerto al subirlo a producción
@@ -19,8 +22,39 @@ server.on("error", (error) =>
 );
 
 // Instanciar apis
-const productsApi = new MysqlContainer(options.mariaDB, "productos");
-const messagesApi = new MysqlContainer(options.sqliteDB, "messages");
+// const productsApi = new MysqlContainer(options.mariaDB, "productos");
+// const messagesApi = new MysqlContainer(options.sqliteDB, "messages");
+const productsApi = new ProductsContainer();
+const messagesApi = new MessagesContainer("./src/files/messages.txt");
+
+// Normalización
+const authorSchema = new schema.Entity("authors", {});
+const msgSchema = new schema.Entity("msgs", { author: authorSchema });
+const chatSchema = new schema.Entity(
+  "chat",
+  {
+    msgs: [msgSchema],
+  },
+  { idAttribute: "id" }
+);
+
+// Aplicar la normalización
+const normalizeData = (data) => {
+  const normalizedData = normalize(
+    {
+      id: "chatHistory",
+      msgs: data,
+    },
+    chatSchema
+  );
+  return normalizedData;
+};
+
+const normalizeMessages = async () => {
+  const results = await messagesApi.getAll();
+  const normalizedMsgs = normalizeData(results);
+  return normalizedMsgs;
+};
 
 // Servidor de websocket y lo conectamos con el servidor de express
 const io = new Server(server);
@@ -44,12 +78,13 @@ io.on("connection", async (socket) => {
   });
 
   // Carga inicial de mensajes
-  socket.emit("mensajes", await messagesApi.getAll());
+  socket.emit("mensajes", await normalizeMessages());
 
   // Actualizacion de mensajes
   socket.on("nuevoMensaje", async (mensaje) => {
+    console.log(mensaje);
     mensaje.fyh = new Date().toLocaleString();
     await messagesApi.save(mensaje);
-    io.sockets.emit("mensajes", await messagesApi.getAll());
+    io.sockets.emit("mensajes", await normalizeMessages());
   });
 });
