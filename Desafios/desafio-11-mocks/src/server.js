@@ -7,7 +7,7 @@ const { Server } = require("socket.io");
 const { normalize, schema } = require("normalizr");
 
 const MessagesContainer = require("./containers/MessagesContainer.js");
-const ProductsContainer = require("./containers/ProductsContainer.js");
+// const ProductsContainer = require("./containers/ProductsContainer.js");
 
 // Inicializar el servidor
 // Esto es para no limitar el puerto al subirlo a producción
@@ -23,7 +23,7 @@ server.on("error", (error) =>
 );
 
 // Instanciar apis
-const productsApi = new ProductsContainer("productos.txt");
+// const productsApi = new ProductsContainer("productos.txt");
 const messagesApi = new MessagesContainer("./src/files/messages.txt");
 
 // Server
@@ -75,7 +75,7 @@ io.on("connection", async (socket) => {
   console.log("Se ha conectado un nuevo cliente con el id:", socket.id);
 
   // Carga inicial de productos
-  io.sockets.emit("productos", await productsApi.getAll());
+  // io.sockets.emit("productos", await productsApi.getAll());
 
   // Actualización de productos
   // socket.on("update", async (producto) => {
