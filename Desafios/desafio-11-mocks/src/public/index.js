@@ -4,33 +4,31 @@ console.log("JS Funcionando");
 const socketClient = io();
 
 // Agregar producto
-const enviarProducto = document.getElementById("enviarProducto");
-enviarProducto.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const producto = {
-    title: enviarProducto[0].value,
-    price: enviarProducto[1].value,
-    thumbnail: enviarProducto[2].value,
-  };
-  socketClient.emit("update", producto);
-  enviarProducto.reset();
-});
+// const enviarProducto = document.getElementById("enviarProducto");
+// enviarProducto.addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   const producto = {
+//     title: enviarProducto[0].value,
+//     price: enviarProducto[1].value,
+//     thumbnail: enviarProducto[2].value,
+//   };
+//   socketClient.emit("update", producto);
+//   enviarProducto.reset();
+// });
 
-socketClient.on("productos", (productos) => {
-  makeHtmlTable(productos).then((html) => {
-    document.getElementById("productos").innerHTML = html;
-  });
-});
+// const makeHtmlTable = async (data) => {
+//   const response = await fetch("views/partials/table.hbs");
+//   const result = await response.text();
+//   const template = Handlebars.compile(result);
+//   const html = template({ products: data });
+//   return html;
+// };
 
-const makeHtmlTable = (productos) => {
-  return fetch("views/productsTable.hbs")
-    .then((rsp) => rsp.text())
-    .then((plantilla) => {
-      const template = Handlebars.compile(plantilla);
-      const html = template({ productos });
-      return html;
-    });
-};
+socketClient.on("productos", async (data) => {
+  // const htmlTable = await makeHtmlTable(data);
+  const productsContainer = document.getElementById("productos");
+  // productsContainer.innerHTML = htmlTable;
+});
 
 // Schemas
 const authorSchema = new normalizr.schema.Entity("authors");
