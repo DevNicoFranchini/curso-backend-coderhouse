@@ -1,10 +1,11 @@
 const express = require("express");
-const options = require("./config/dbConfig.js");
+const handlebars = require("express-handlebars");
+
+const router = require("./routes/routes.js");
 
 const { Server } = require("socket.io");
 const { normalize, schema } = require("normalizr");
 
-const MysqlContainer = require("./containers/MysqlContainer.js");
 const MessagesContainer = require("./containers/MessagesContainer.js");
 const ProductsContainer = require("./containers/ProductsContainer.js");
 
@@ -22,10 +23,20 @@ server.on("error", (error) =>
 );
 
 // Instanciar apis
-// const productsApi = new MysqlContainer(options.mariaDB, "productos");
-// const messagesApi = new MysqlContainer(options.sqliteDB, "messages");
-const productsApi = new ProductsContainer();
+const productsApi = new ProductsContainer("productos.txt");
 const messagesApi = new MessagesContainer("./src/files/messages.txt");
+
+// Server
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname + "/public"));
+
+app.engine("hbs", handlebars.engine({ extname: "hbs" }));
+app.set("views", "./src/public/views");
+app.set("view engine", "hbs");
+
+// Routes
+app.use("/", router);
 
 // Normalización
 const authorSchema = new schema.Entity("authors", {});
@@ -59,11 +70,6 @@ const normalizeMessages = async () => {
 // Servidor de websocket y lo conectamos con el servidor de express
 const io = new Server(server);
 
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/public"));
-
 // Configurar el socket
 io.on("connection", async (socket) => {
   console.log("Se ha conectado un nuevo cliente con el id:", socket.id);
@@ -72,10 +78,10 @@ io.on("connection", async (socket) => {
   io.sockets.emit("productos", await productsApi.getAll());
 
   // Actualización de productos
-  socket.on("update", async (producto) => {
-    await productsApi.save(producto);
-    io.sockets.emit("productos", await productsApi.getAll());
-  });
+  // socket.on("update", async (producto) => {
+  //   await productsApi.save(producto);
+  //   io.sockets.emit("productos", await productsApi.getAll());
+  // });
 
   // Carga inicial de mensajes
   io.sockets.emit("mensajes", await normalizeMessages());
