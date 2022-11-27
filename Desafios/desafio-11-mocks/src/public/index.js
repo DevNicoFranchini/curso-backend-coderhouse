@@ -54,8 +54,9 @@ const inputAlias = document.getElementById("inputAlias");
 const inputAvatar = document.getElementById("inputAvatar");
 const inputMensaje = document.getElementById("inputMensaje");
 const btnEnviar = document.getElementById("btnEnviar");
-
+const compresion = document.getElementById("compresion");
 const formPublicarMensaje = document.getElementById("formPublicarMensaje");
+
 formPublicarMensaje.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -96,6 +97,15 @@ socketClient.on("mensajes", async (mensajes) => {
   });
   const chatContainer = document.getElementById("mensajes");
   chatContainer.innerHTML = listaMensajes;
+
+  // console.log(JSON.stringify(normalData).length);
+  // console.log(JSON.stringify(mensajes).length);
+
+  // Porcentaje de compresión
+  compresion.innerHTML = `Porcentaje de compresión: ${(
+    (JSON.stringify(normalData).length / JSON.stringify(mensajes).length) *
+    100
+  ).toPrecision(2)}%`;
 });
 
 inputUsername.addEventListener("input", () => {
