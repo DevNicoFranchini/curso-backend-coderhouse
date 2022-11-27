@@ -63,10 +63,40 @@
     <div class="container pt-2">
       <h3>Centro de mensajería</h3>
       <input
-        type="text"
+        type="email"
         id="inputUsername"
         class="form-control w-50 my-2 mr-2"
         placeholder="Ingresá tu email"
+      />
+      <input
+        type="text"
+        id="inputName"
+        class="form-control w-50 my-2 mr-2"
+        placeholder="Ingresá tu nombre"
+      />
+      <input
+        type="text"
+        id="inputLastName"
+        class="form-control w-50 my-2 mr-2"
+        placeholder="Ingresá tu apellido"
+      />
+      <input
+        type="number"
+        id="inputAge"
+        class="form-control w-50 my-2 mr-2"
+        placeholder="Ingresá tu edad"
+      />
+      <input
+        type="text"
+        id="inputAlias"
+        class="form-control w-50 my-2 mr-2"
+        placeholder="Ingresá tu alias"
+      />
+      <input
+        type="text"
+        id="inputAvatar"
+        class="form-control w-50 my-2 mr-2"
+        placeholder="Ingresá tu avatar"
       />
 
       <div id="mensajes"></div>
@@ -92,9 +122,8 @@
       </form>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
     <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-    <script src="index.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
       integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
@@ -105,5 +134,7 @@
       integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
