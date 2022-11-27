@@ -29,11 +29,11 @@ const messagesApi = new MessagesContainer("./src/files/messages.txt");
 
 // Normalización
 const authorSchema = new schema.Entity("authors", {});
-const msgSchema = new schema.Entity("msgs", { author: authorSchema });
+const msgSchema = new schema.Entity("mensajes", { author: authorSchema });
 const chatSchema = new schema.Entity(
   "chat",
   {
-    msgs: [msgSchema],
+    mensajes: [msgSchema],
   },
   { idAttribute: "id" }
 );
@@ -43,7 +43,7 @@ const normalizeData = (data) => {
   const normalizedData = normalize(
     {
       id: "chatHistory",
-      msgs: data,
+      mensajes: data,
     },
     chatSchema
   );
@@ -69,7 +69,7 @@ io.on("connection", async (socket) => {
   console.log("Se ha conectado un nuevo cliente con el id:", socket.id);
 
   // Carga inicial de productos
-  socket.emit("productos", await productsApi.getAll());
+  io.sockets.emit("productos", await productsApi.getAll());
 
   // Actualización de productos
   socket.on("update", async (producto) => {
@@ -78,7 +78,7 @@ io.on("connection", async (socket) => {
   });
 
   // Carga inicial de mensajes
-  socket.emit("mensajes", await normalizeMessages());
+  io.sockets.emit("mensajes", await normalizeMessages());
 
   // Actualizacion de mensajes
   socket.on("nuevoMensaje", async (mensaje) => {
