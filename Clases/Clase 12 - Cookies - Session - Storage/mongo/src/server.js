@@ -1,7 +1,7 @@
 import express from "express";
+import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import MongoStore from "connect-mongo";
 
 const app = express();
 
