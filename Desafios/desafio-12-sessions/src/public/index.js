@@ -3,31 +3,8 @@ console.log("JS Funcionando");
 // Inicializo desde el lado cliente
 const socketClient = io();
 
-// Agregar producto
-// const enviarProducto = document.getElementById("enviarProducto");
-// enviarProducto.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   const producto = {
-//     title: enviarProducto[0].value,
-//     price: enviarProducto[1].value,
-//     thumbnail: enviarProducto[2].value,
-//   };
-//   socketClient.emit("update", producto);
-//   enviarProducto.reset();
-// });
-
-// const makeHtmlTable = async (data) => {
-//   const response = await fetch("views/partials/table.hbs");
-//   const result = await response.text();
-//   const template = Handlebars.compile(result);
-//   const html = template({ products: data });
-//   return html;
-// };
-
 socketClient.on("productos", async (data) => {
-  // const htmlTable = await makeHtmlTable(data);
   const productsContainer = document.getElementById("productos");
-  // productsContainer.innerHTML = htmlTable;
 });
 
 // Schemas
@@ -95,9 +72,6 @@ socketClient.on("mensajes", async (mensajes) => {
   });
   const chatContainer = document.getElementById("mensajes");
   chatContainer.innerHTML = listaMensajes;
-
-  // console.log(JSON.stringify(normalData).length);
-  // console.log(JSON.stringify(mensajes).length);
 
   // Porcentaje de compresión
   compresion.innerHTML = `Porcentaje de compresión: ${(
