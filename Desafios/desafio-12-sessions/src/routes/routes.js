@@ -12,10 +12,6 @@ const router = express.Router();
 faker.locale = "es";
 
 router.get("/", (req, res) => {
-  res.render("home");
-});
-
-router.get("/api/productos-test", async (req, res) => {
   try {
     // const products = await productsContainer.getAll();
     let products = [];
