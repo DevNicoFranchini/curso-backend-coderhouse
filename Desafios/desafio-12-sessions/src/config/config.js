@@ -1,5 +1,4 @@
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config({ path: "./src/config/.env" });
 
 const config = {
   port: process.env.PORT || 8080,
