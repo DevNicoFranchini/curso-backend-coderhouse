@@ -1,0 +1,26 @@
+<div class="mx-5 my-2">
+
+  <h1>Desafío 12 - Sessions</h1>
+  <div class="row d-flex my-4">
+    <div class="col-7"><h2
+        class="h-100 py-2 px-2 bg-dark d-flex justify-content-center align-items-center rounded text-white fs-4"
+      >Bienvenido
+        {{username}}</h2>
+    </div>
+    <div class="col-3">
+      <a
+        href="/api/productos-test"
+        class="h-100 py-2 px-2 d-flex justify-content-center align-items-center btn btn-primary fs-4"
+      >Productos</a>
+    </div>
+    <div class="col-2">
+      <a
+        class="h-100 py-2 px-2 d-flex justify-content-center align-items-center btn btn-danger fs-5"
+        href="/logout"
+      >Logout</a>
+    </div>
+  </div>
+
+  {{> messages}}
+
+</div>
