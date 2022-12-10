@@ -5,6 +5,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
 const router = require("./routes/routes.js");
+const signupRouter = require("./routes/signup.js");
 const loginRouter = require("./routes/login.js");
 const logoutRouter = require("./routes/logout.js");
 const config = require("./config/config.js");
@@ -68,6 +69,7 @@ app.get("/", checkUserLogged, async (req, res) => {
 app.use("/api/productos-test", checkUserLogged, router);
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
+app.use("/signup", signupRouter);
 
 // Normalización
 const authorSchema = new schema.Entity("authors", {});
