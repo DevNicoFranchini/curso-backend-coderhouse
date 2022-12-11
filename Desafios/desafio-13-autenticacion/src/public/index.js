@@ -53,7 +53,7 @@ formPublicarMensaje.addEventListener("submit", (e) => {
 });
 
 socketClient.on("mensajes", async (mensajes) => {
-  console.log("normal", mensajes);
+  // console.log("normal", mensajes);
   const normalData = normalizr.denormalize(
     mensajes.result,
     chatSchema,
