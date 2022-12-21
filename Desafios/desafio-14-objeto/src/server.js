@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const bCrypt = require("bcrypt");
+const parseArgs = require("minimist");
 
 const router = require("./routes/routes.js");
 const signupRouter = require("./routes/signup.js");
@@ -24,7 +25,10 @@ const MessagesContainer = require("./containers/MessagesContainer.js");
 
 // Inicializar el servidor
 const app = express();
-const PORT = config.port;
+const { PORT } = parseArgs(process.argv.slice(2), {
+  alias: { p: "PORT" },
+  default: { PORT: 8080 },
+});
 
 // Servidor de express
 const server = app.listen(PORT, () =>
