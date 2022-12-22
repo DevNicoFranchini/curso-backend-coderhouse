@@ -14,6 +14,8 @@ const signupErrorRouter = require("./routes/signupError.js");
 const loginRouter = require("./routes/login.js");
 const loginErrorRouter = require("./routes/loginError.js");
 const logoutRouter = require("./routes/logout.js");
+const randomsRouter = require("./routes/randoms.js");
+const infoRouter = require("./routes/info.js");
 const config = require("./config/config.js");
 const userModel = require("./models/user.js");
 
@@ -172,9 +174,8 @@ passport.deserializeUser(function (user, cb) {
 
 // Routes
 app.get("/", (req, res) => {
-  const username = req.session.passport.user.username;
-  console.log("users", username);
   if (req.isAuthenticated()) {
+    const username = req.session.passport.user.username;
     res.render("home", { username });
   } else {
     res.redirect("/login");
@@ -187,6 +188,8 @@ app.use("/loginError", loginErrorRouter);
 app.use("/signup", signupRouter);
 app.use("/signupError", signupErrorRouter);
 app.use("/logout", logoutRouter);
+app.use("/api/randoms", randomsRouter);
+app.use("/info", infoRouter);
 
 // Normalización
 const authorSchema = new schema.Entity("authors", {});
