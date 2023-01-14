@@ -7,8 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server.js",
     "create-db": "node src/scripts/createTable.js",
-    "node-fork": "node src/server.js -p 8081",
-    "node-cluster": "node src/server.js -p 8081 -m CLUSTER"
+    "node-fork": "nodemon src/server.js -p 8081",
+    "node-cluster": "nodemon src/server.js -p 8081 -m CLUSTER",
+    "nginx-node-cluster": "node src/server.js -p 8081 -m CLUSTER",
+    "nginx-node-fork": "node src/server.js -p 8080",
+    "forever": "forever start src/server.js"
   },
   "keywords": [],
   "author": "",
