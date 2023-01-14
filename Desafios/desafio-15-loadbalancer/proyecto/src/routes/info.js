@@ -1,4 +1,5 @@
 const express = require("express");
+const os = require("os");
 
 const router = express.Router();
 
@@ -10,6 +11,7 @@ const info = {
   Path: process.execPath,
   Id: process.pid,
   Folder: process.cwd(),
+  Process: os.cpus().length,
 };
 
 router.get("/", (req, res) => {
