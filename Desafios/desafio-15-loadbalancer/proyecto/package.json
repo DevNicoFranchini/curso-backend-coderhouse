@@ -11,7 +11,9 @@
     "node-cluster": "nodemon src/server.js -p 8081 -m CLUSTER",
     "nginx-node-cluster": "node src/server.js -p 8081 -m CLUSTER",
     "nginx-node-fork": "node src/server.js -p 8080",
-    "forever": "forever start src/server.js"
+    "forever": "forever start src/server.js",
+    "pm2-fork": "pm2 start src/server.js -p 8080",
+    "pm2-cluster": "pm2 start src/server.js -p 8081 -m CLUSTER"
   },
   "keywords": [],
   "author": "",
