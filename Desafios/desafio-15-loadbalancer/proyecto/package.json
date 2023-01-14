@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server.js",
-    "create-db": "node src/scripts/createTable.js"
+    "create-db": "node src/scripts/createTable.js",
+    "node-fork": "node src/server.js -p 8081",
+    "node-cluster": "node src/server.js -p 8081 -m CLUSTER"
   },
   "keywords": [],
   "author": "",

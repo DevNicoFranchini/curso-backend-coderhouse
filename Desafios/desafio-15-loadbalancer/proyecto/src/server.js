@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const bCrypt = require("bcrypt");
 const parseArgs = require("minimist");
+const cluster = require("cluster");
+const os = require("os");
 
 const router = require("./routes/routes.js");
 const signupRouter = require("./routes/signup.js");
@@ -25,20 +27,58 @@ const LocalStrategy = require("passport-local").Strategy;
 
 const MessagesContainer = require("./containers/MessagesContainer.js");
 
+// Capturar argumentos
+const options = {
+  alias: { m: "mode", p: "port" },
+  default: { mode: "FORK", port: 8080 },
+};
+const objArguments = parseArgs(process.argv.slice(2), options);
+
+const MODO = objArguments.mode;
+const PORT = objArguments.port;
+
 // Inicializar el servidor
 const app = express();
-const { PORT } = parseArgs(process.argv.slice(2), {
-  alias: { p: "PORT" },
-  default: { PORT: 8080 },
-});
 
 // Servidor de express
-const server = app.listen(PORT, () =>
-  console.log(`Ivan, el servidor está corriendo en el puerto ${PORT}`)
-);
-server.on("error", (error) =>
-  console.log(`Hubo un problema en el servidor. Error: ${error}`)
-);
+if (MODO === "CLUSTER" && cluster.isPrimary) {
+  const numCPUS = os.cpus().length; // Num. de núcleos del procesador.
+  for (let i = 0; i < numCPUS; i++) {
+    cluster.fork();
+  }
+
+  cluster.on("exit", (worker) => {
+    cluster.fork();
+  });
+} else {
+  const server = app.listen(PORT, () =>
+    console.log(
+      `Ivan, el servidor está corriendo en el puerto ${PORT} on process ${process.pid}`
+    )
+  );
+  server.on("error", (error) =>
+    console.log(`Hubo un problema en el servidor. Error: ${error}`)
+  );
+
+  // Servidor de websocket y lo conectamos con el servidor de express
+  const io = new Server(server);
+
+  // Configurar el socket
+  io.on("connection", async (socket) => {
+    // console.log("Se ha conectado un nuevo cliente con el id:", socket.id);
+
+    // Carga inicial de mensajes
+    io.sockets.emit("mensajes", await normalizeMessages());
+
+    // Actualizacion de mensajes
+    socket.on("nuevoMensaje", async (mensaje) => {
+      //console.log(mensaje);
+      mensaje.fyh = new Date().toLocaleString();
+      await messagesApi.save(mensaje);
+      io.sockets.emit("mensajes", await normalizeMessages());
+    });
+  });
+}
 
 // Server
 app.use(express.json());
@@ -219,22 +259,3 @@ const normalizeMessages = async () => {
   const normalizedMsgs = normalizeData(results);
   return normalizedMsgs;
 };
-
-// Servidor de websocket y lo conectamos con el servidor de express
-const io = new Server(server);
-
-// Configurar el socket
-io.on("connection", async (socket) => {
-  // console.log("Se ha conectado un nuevo cliente con el id:", socket.id);
-
-  // Carga inicial de mensajes
-  io.sockets.emit("mensajes", await normalizeMessages());
-
-  // Actualizacion de mensajes
-  socket.on("nuevoMensaje", async (mensaje) => {
-    console.log(mensaje);
-    mensaje.fyh = new Date().toLocaleString();
-    await messagesApi.save(mensaje);
-    io.sockets.emit("mensajes", await normalizeMessages());
-  });
-});
