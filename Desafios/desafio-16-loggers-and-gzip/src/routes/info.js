@@ -1,5 +1,6 @@
 const express = require("express");
 const os = require("os");
+const compression = require("compression");
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ const info = {
   Process: os.cpus().length,
 };
 
-router.get("/", (req, res) => {
+router.get("/", compression(), (req, res) => {
   res.render("info", { info });
 });
 
