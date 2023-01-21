@@ -20,6 +20,7 @@ const randomsRouter = require("./routes/randoms.js");
 const infoRouter = require("./routes/info.js");
 const config = require("./config/config.js");
 const userModel = require("./models/user.js");
+const logger = require("./logs/logger.js");
 
 const { Server } = require("socket.io");
 const { normalize, schema } = require("normalizr");
@@ -222,6 +223,12 @@ app.get("/", (req, res) => {
   }
 });
 
+// Logger
+const infoLogger = (req, res, next) => {
+  logger.info(`ruta : ${req.path}, peticion : ${req.method}`);
+  next();
+};
+
 app.use("/api/productos-test", checkAuth, router);
 app.use("/login", loginRouter);
 app.use("/loginError", loginErrorRouter);
@@ -230,6 +237,11 @@ app.use("/signupError", signupErrorRouter);
 app.use("/logout", logoutRouter);
 app.use("/api/randoms", randomsRouter);
 app.use("/info", infoRouter);
+
+app.use(infoLogger);
+app.get("/*", (req, res) => {
+  logger.warn(`Ruta: ${req.path} inexistente. Peticion: ${req.method}`);
+});
 
 // Normalización
 const authorSchema = new schema.Entity("authors", {});
