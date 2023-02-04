@@ -5,6 +5,7 @@ import { options } from './../config/config.js';
 export const connectDB = () => {
 	try {
 		const mongoDBUrl = options.mongodb;
+
 		mongoose.set('strictQuery', true);
 		mongoose.connect(mongoDBUrl, {
 			useNewUrlParser: true,
