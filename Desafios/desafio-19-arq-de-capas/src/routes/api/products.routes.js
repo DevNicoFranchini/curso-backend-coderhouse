@@ -6,7 +6,12 @@ const { datatype, commerce, image } = faker;
 
 faker.locale = 'es';
 
-router.get('/test', (req, res) => {
+// Home products
+router.get('/', (req, res) => {
+	res.send('Test products');
+});
+
+router.get('/randoms', (req, res) => {
 	try {
 		let products = [];
 
