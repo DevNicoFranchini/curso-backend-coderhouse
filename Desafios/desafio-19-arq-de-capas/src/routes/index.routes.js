@@ -7,7 +7,12 @@ const router = express.Router();
 
 // GET
 router.get('/', (req, res) => {
-	res.send('Test');
+	if (req.isAuthenticated()) {
+		const username = req.session.passport.user.username;
+		res.render('home', { username });
+	} else {
+		res.redirect('/api/users/login');
+	}
 });
 
 router.use('/users', UserRouter);
