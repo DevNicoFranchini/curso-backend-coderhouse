@@ -1,32 +1,58 @@
-import express from 'express';
-import handlebars from 'express-handlebars';
+import parseArgs from 'minimist';
+import cluster from 'cluster';
+import os from 'os';
 
-import { URL } from 'url';
+import { Server } from 'socket.io';
+
 import { options } from './config/config.js';
-import { connectDB } from './db/config.db.js';
-import { apiRouter } from './routes/index.routes.js';
+import { app, normalizeMessages } from './app.js';
 
-const __dirname = new URL('.', import.meta.url).pathname;
-const PORT = options.port;
-const app = express();
+// Capturar argumentos
+const args = {
+	alias: { m: 'mode', p: 'port' },
+	default: { mode: 'FORK', port: options.port },
+};
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'));
+const objArguments = parseArgs(process.argv.slice(2), args);
+const MODE = objArguments.mode;
+const PORT = objArguments.port;
 
-app.engine('hbs', handlebars.engine({ extname: 'hbs' }));
-app.set('views', './src/public/views');
-app.set('view engine', 'hbs');
+// Servidor de express
+if (MODE === 'CLUSTER' && cluster.isPrimary) {
+	const numCPUS = os.cpus().length; // Num. de núcleos del procesador.
+	for (let i = 0; i < numCPUS; i++) {
+		cluster.fork();
+	}
 
-connectDB();
+	cluster.on('exit', (worker) => {
+		cluster.fork();
+	});
+} else {
+	const server = app.listen(PORT, () =>
+		console.log(
+			`Ivan, el servidor está corriendo en el puerto ${PORT} on process ${process.pid}`
+		)
+	);
+	server.on('error', (error) =>
+		console.log(`Hubo un problema en el servidor. Error: ${error}`)
+	);
 
-const server = app.listen(PORT, () =>
-	console.log(
-		`Ivan, el servidor está corriendo en el puerto ${PORT} on process ${process.pid}`
-	)
-);
-server.on('error', (error) =>
-	console.log(`Hubo un problema en el servidor. Error: ${error}`)
-);
+	// Servidor de websocket y lo conectamos con el servidor de express
+	const io = new Server(server);
 
-app.use('/api', apiRouter);
+	// Configurar el socket
+	io.on('connection', async (socket) => {
+		// console.log("Se ha conectado un nuevo cliente con el id:", socket.id);
+
+		// Carga inicial de mensajes
+		io.sockets.emit('mensajes', await normalizeMessages());
+
+		// Actualización de mensajes
+		socket.on('nuevoMensaje', async (mensaje) => {
+			//console.log(mensaje);
+			mensaje.fyh = new Date().toLocaleString();
+			await messagesApi.save(mensaje);
+			io.sockets.emit('mensajes', await normalizeMessages());
+		});
+	});
+}
