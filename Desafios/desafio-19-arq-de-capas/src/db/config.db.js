@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
 import { options } from './../config/config.js';
 
-export const connectDB = () => {
+// Connection to db config
+const connectDB = (app) => {
 	try {
 		const mongoDBUrl = options.mongodb;
 
@@ -16,3 +19,20 @@ export const connectDB = () => {
 	}
 	console.log('Conexión a la base de datos de manera exitosa');
 };
+
+// Session db config
+const sessionDB = (app) => {
+	app.use(
+		session({
+			store: MongoStore.create({
+				mongoUrl: options.mongosessions,
+				mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+			}),
+			secret: 'claveSecreta',
+			resave: false,
+			saveUninitialized: false,
+		})
+	);
+};
+
+export { connectDB, sessionDB };
