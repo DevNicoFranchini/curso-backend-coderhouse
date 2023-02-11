@@ -3,7 +3,7 @@ import bCrypt from 'bcrypt';
 
 import { Strategy as LocalStrategy } from 'passport-local';
 
-import { UserModel } from './../models/user.model.js';
+import { UserModel } from './../models/dbmodel/user.model.js';
 
 const isValidPassword = (user, password) => {
 	return bCrypt.compareSync(password, user.password);
