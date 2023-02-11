@@ -7,7 +7,7 @@ import { options } from './../config/config.js';
 // Connection to db config
 const connectDB = (app) => {
 	try {
-		const mongoDBUrl = options.mongodb;
+		const mongoDBUrl = options.mongodb.mongodburl;
 
 		mongoose.set('strictQuery', true);
 		mongoose.connect(mongoDBUrl, {
@@ -25,7 +25,7 @@ const sessionDB = (app) => {
 	app.use(
 		session({
 			store: MongoStore.create({
-				mongoUrl: options.mongosessions,
+				mongoUrl: options.mongodb.mongosessions,
 				mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
 			}),
 			secret: 'claveSecreta',
