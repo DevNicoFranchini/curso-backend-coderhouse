@@ -23,6 +23,8 @@ export const options = {
 		node_env: objArgs.env,
 		dbType: process.env.DB_TYPE || 'MONGO',
 	},
-	mongodb: process.env.MONGO || 'mongodb://localhost:27017',
-	mongosessions: process.env.SESSIONS || 'mongodb://localhost:27017',
+	mongodb: {
+		mongodburl: process.env.MONGO || 'mongodb://localhost:27017',
+		mongosessions: process.env.SESSIONS || 'mongodb://localhost:27017',
+	},
 };
