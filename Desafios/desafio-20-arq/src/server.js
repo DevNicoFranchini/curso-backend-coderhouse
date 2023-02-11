@@ -1,4 +1,3 @@
-import parseArgs from 'minimist';
 import cluster from 'cluster';
 import os from 'os';
 
@@ -7,15 +6,8 @@ import { Server } from 'socket.io';
 import { options } from './config/config.js';
 import { app, normalizeMessages } from './app.js';
 
-// Capturar argumentos
-const args = {
-	alias: { m: 'mode', p: 'port' },
-	default: { mode: 'FORK', port: options.port },
-};
-
-const objArguments = parseArgs(process.argv.slice(2), args);
-const MODE = objArguments.mode;
-const PORT = objArguments.port;
+const PORT = options.server.port;
+const MODE = options.server.mode;
 
 // Servidor de express
 if (MODE === 'CLUSTER' && cluster.isPrimary) {
