@@ -34,7 +34,7 @@ app.set('views', './src/public/views');
 app.set('view engine', 'hbs');
 
 sessionDB(app);
-connectDB(app);
+//connectDB(app);
 
 app.use(passport.initialize());
 app.use(passport.session());
