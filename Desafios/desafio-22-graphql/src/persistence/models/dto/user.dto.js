@@ -1,5 +1,6 @@
 class UserDto {
-	constructor({ username }) {
+	constructor({ _id, username }) {
+		this.id = `${_id}`;
 		this.fullname = `${username}`;
 	}
 }
