@@ -12,7 +12,7 @@ const objArgs = ParsedArgs(process.argv.slice(2), {
 	default: {
 		port: process.env.PORT || 8080,
 		mode: 'FORK',
-		env: 'DEV',
+		env: 'TEST',
 	},
 });
 
@@ -24,7 +24,9 @@ export const options = {
 		dbType: process.env.DB_TYPE || 'MONGO',
 	},
 	mongodb: {
-		mongodburl: process.env.MONGO || 'mongodb://localhost:27017',
-		mongosessions: process.env.SESSIONS || 'mongodb://localhost:27017',
+		mongodburl:
+			objArgs.env === 'TEST' ? process.env.MONGO_TEST : process.env.MONGO,
+		mongosessions:
+			objArgs.env === 'TEST' ? process.env.SESSIONS_TEST : process.env.SESSIONS,
 	},
 };
