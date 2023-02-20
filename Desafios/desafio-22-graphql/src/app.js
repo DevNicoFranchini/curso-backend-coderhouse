@@ -12,6 +12,7 @@ import { connectDB, sessionDB } from './db/config.db.js';
 import { apiRouter } from './routes/index.routes.js';
 import { logger } from './../logs/logger.js';
 import { MessagesContainer } from './controllers/messages.controller.js';
+import { userGraphqlController } from './controllers/users.controllers.graphql.js';
 
 import {
 	signupStrategy,
@@ -51,6 +52,7 @@ serializeUser();
 deserializeUser();
 
 app.use('/api', apiRouter);
+app.use('/graphql', userGraphqlController());
 
 const messagesApi = new MessagesContainer('./src/files/messages.txt');
 
