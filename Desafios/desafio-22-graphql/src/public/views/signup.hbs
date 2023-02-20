@@ -1,0 +1,30 @@
+<div class='container pt-2'>
+	<h2 class='py-2'>Registrate aquí</h2>
+	<form method='post' action='/api/users/signup'>
+		<p>
+			<input
+				type='email'
+				id='username'
+				name='username'
+				placeholder='Email'
+				required
+			/><i class='validation'><span></span><span></span></i>
+		</p>
+		<p>
+			<input
+				type='password'
+				id='password'
+				name='password'
+				placeholder='Password'
+				required
+			/><i class='validation'><span></span><span></span></i>
+		</p>
+		<p>
+			¿Ya tienes una cuenta?
+			<a href='/login'>Inicia sesión aquí</a>
+		</p>
+		<p>
+			<input type='submit' id='signup' value='Sign up' />
+		</p>
+	</form>
+</div>
