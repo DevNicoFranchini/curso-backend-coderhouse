@@ -5,14 +5,10 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start-dev": "nodemon src/server.js",
-		"create-db": "node src/scripts/createTable.js",
-		"node-fork": "nodemon src/server.js -p 8081",
-		"node-cluster": "nodemon src/server.js -p 8081 -m CLUSTER",
-		"forever": "forever start src/server.js",
-		"artillery-child": "artillery quick --count 50 -n 40 http://localhost:8080/api/randoms?cant=1000 > result_child.txt",
-		"artillery-noChild": "artillery quick --count 50 -n 40 http://localhost:8080/api/randoms?cant=1000  > result_noChild.txt"
+		"test": "mocha src/test/user.test.js --exit",
+		"start": "node src/server.js",
+		"start-dev": "node src/server.js -e DEV",
+		"start-prod": "node src/server.js -p 3000 -m FORK -e PROD"
 	},
 	"keywords": [],
 	"author": "",
