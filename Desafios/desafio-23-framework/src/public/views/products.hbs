@@ -1,0 +1,14 @@
+<h1>LISTA DE PRODUCTOS</h1>
+
+{{#if products}}
+  {{> table}}
+  <div class="my-4" id="productos"></div>
+{{else}}
+  <div class="alert alert-danger" role="alert">
+    El producto no existe
+  </div>
+{{/if}}
+
+<div class="text-center">
+  <a href="/api" class="btn btn-danger mt-1">Volver a la página principal</a>
+</div>
